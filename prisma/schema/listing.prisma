@@ -1,0 +1,66 @@
+model Listing {
+  id              String        @id @default(cuid())
+  title           String
+  description     String        @db.Text
+  price           Float         
+  listingType     ListingType   
+  status          ListingStatus @default(PENDING)
+  
+  // Location Data
+  countryId       String
+  country         Country       @relation(fields: [countryId], references: [id])
+  regionId        String
+  region          Region        @relation(fields: [regionId], references: [id])
+  address         String?       
+  
+  // Contact Info 
+  contactEmail    String
+  contactPhone    String
+  facebookUrl     String?
+  instagramUrl    String?
+  
+  // Event Specifics (Optional)
+  startDate       DateTime?
+  endDate         DateTime?
+  
+  // Media (Images)
+  mainImage       String
+  serviceImages   String[]      @default([])
+  gallery         String[]      // Multi-image gallery array
+  
+  // Admin & Spam Monitoring
+  spamReports     Int           @default(0)
+  
+  // Relations
+  userId          String
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId      String
+  category        Category      @relation(fields: [categoryId], references: [id])
+  subCategoryId   String?
+  subCategory     SubCategory?  @relation(fields: [subCategoryId], references: [id])
+  
+  // Stripe & Payment Relations
+  payments        Payment[]
+  subscription    Subscription?
+
+  publishedAt     DateTime?
+  expiresAt       DateTime?
+  
+  // Soft Delete
+  deletedAt       DateTime?
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+enum ListingType {
+  SERVICE
+  EVENT
+}
+
+enum ListingStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+  EXPIRED
+}

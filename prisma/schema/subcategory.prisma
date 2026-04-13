@@ -1,0 +1,7 @@
+model SubCategory {
+  id          String    @id @default(cuid())
+  name        String
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  listings    Listing[]
+}

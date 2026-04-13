@@ -1,0 +1,11 @@
+model SupportTicket {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String   @db.Text
+  
+  // Soft Delete
+  deletedAt DateTime?
+  
+  createdAt DateTime @default(now())
+}

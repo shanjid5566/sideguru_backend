@@ -1,0 +1,29 @@
+model User {
+  id              String    @id @default(cuid())
+  fullName        String
+  email           String    @unique
+  phoneNumber     String?
+  password        String
+  profileImage    String?
+  countryId       String?
+  country         Country?  @relation(fields: [countryId], references: [id])
+  regionId        String?
+  region          Region?   @relation(fields: [regionId], references: [id])
+  role            Role      @default(USER) 
+  isEmailVerified Boolean   @default(false)
+  
+  // Relations
+  listings      Listing[]
+  payments      Payment[]
+  
+  // Soft Delete
+  deletedAt     DateTime?
+  
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+}

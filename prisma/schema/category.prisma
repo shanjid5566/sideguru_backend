@@ -1,0 +1,8 @@
+model Category {
+  id            String        @id @default(cuid())
+  name          String        @unique
+  image         String?       
+  type          ListingType   // SERVICE or EVENT
+  subCategories SubCategory[]
+  listings      Listing[]
+}

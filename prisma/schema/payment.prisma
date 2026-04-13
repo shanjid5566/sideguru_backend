@@ -1,0 +1,19 @@
+model Payment {
+  id               String        @id @default(cuid())
+  stripeSessionId  String        @unique 
+  amount           Float         // $0.99 or $2.99
+  status           PaymentStatus @default(PENDING)
+  
+  listingId        String
+  listing          Listing       @relation(fields: [listingId], references: [id])
+  userId           String
+  user             User          @relation(fields: [userId], references: [id])
+
+  createdAt        DateTime      @default(now())
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}

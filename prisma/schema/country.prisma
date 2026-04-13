@@ -1,0 +1,7 @@
+model Country {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  regions   Region[] 
+  listings  Listing[]
+  users     User[]
+}

@@ -1,0 +1,7 @@
+model PricingPlan {
+  id          String    @id @default(cuid())
+  title       String    
+  price       Float     
+  duration    Int      
+  isActive    Boolean   @default(true)
+}

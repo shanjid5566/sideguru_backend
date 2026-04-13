@@ -1,0 +1,10 @@
+model Region {
+  id        String   @id @default(cuid())
+  name      String
+  countryId String
+  country   Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  listings  Listing[]
+  users     User[]
+
+  @@unique([name, countryId]) 
+}

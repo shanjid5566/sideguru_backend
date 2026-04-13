@@ -9,7 +9,13 @@ app.use(express_1.default.json());
 app.get("/", (_req, res) => {
     res.json({ message: "SideGuru backend is running" });
 });
-app.get("/health", (_req, res) => {
-    res.status(200).json({ status: "ok" });
+// Health check route
+app.get('/health', (req, res) => {
+    res.status(200).json({
+        status: 'OK',
+        message: 'SideGurus API Server is running',
+        timestamp: new Date().toISOString(),
+        environment: process.env.NODE_ENV || 'development'
+    });
 });
 exports.default = app;

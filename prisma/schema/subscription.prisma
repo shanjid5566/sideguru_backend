@@ -1,0 +1,10 @@
+model Subscription {
+  id             String    @id @default(cuid())
+  listingId      String    @unique
+  listing        Listing   @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  
+  planType       String    
+  startDate      DateTime  @default(now())
+  endDate        DateTime  
+  isActive       Boolean   @default(false)
+}
