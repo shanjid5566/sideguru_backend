@@ -2,6 +2,7 @@ import express, { type NextFunction, type Request, type Response } from "express
 import path from "node:path";
 
 import uploadRouter from "./routes/upload.routes";
+import authRouter from "./routes/auth.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -60,7 +61,7 @@ app.get("/health", (_req: Request, res: Response) => {
 });
 
 app.use("/api/upload", uploadRouter);
-
+app.use("/api/auth", authRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
   if (error.message.includes("Only image and video")) {
     res.status(400).json({ message: error.message });

@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const auth_controller_1 = __importDefault(require("../controllers/auth.controller"));
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const upload_middleware_1 = require("../middlewares/upload.middleware");
+const router = (0, express_1.Router)();
+router.post("/register", auth_controller_1.default.register.bind(auth_controller_1.default));
+router.post("/verify-registration-otp", auth_controller_1.default.verifyRegistrationOTP.bind(auth_controller_1.default));
+router.post("/resend-registration-otp", auth_controller_1.default.resendRegistrationOTP.bind(auth_controller_1.default));
+router.post("/login", auth_controller_1.default.login.bind(auth_controller_1.default));
+router.post("/firebase-register", auth_controller_1.default.firebaseRegister.bind(auth_controller_1.default));
+router.post("/firebase-login", auth_controller_1.default.firebaseLogin.bind(auth_controller_1.default));
+router.post("/forgot-password", auth_controller_1.default.forgotPassword.bind(auth_controller_1.default));
+router.post("/verify-otp", auth_controller_1.default.verifyOTP.bind(auth_controller_1.default));
+router.post("/reset-password", auth_controller_1.default.resetPassword.bind(auth_controller_1.default));
+router.get("/account-settings", auth_middleware_1.authenticate, auth_controller_1.default.getAccountSettings.bind(auth_controller_1.default));
+router.put("/account-settings", auth_middleware_1.authenticate, upload_middleware_1.profileImageUpload, auth_controller_1.default.updateAccountSettings.bind(auth_controller_1.default));
+router.post("/account-settings/change-password", auth_middleware_1.authenticate, auth_controller_1.default.changeAccountPassword.bind(auth_controller_1.default));
+router.post("/change-password", auth_middleware_1.authenticate, auth_controller_1.default.changePassword.bind(auth_controller_1.default));
+router.get("/profile", auth_middleware_1.authenticate, auth_controller_1.default.getProfile.bind(auth_controller_1.default));
+router.put("/profile", auth_middleware_1.authenticate, upload_middleware_1.profileImageUpload, auth_controller_1.default.updateProfile.bind(auth_controller_1.default));
+exports.default = router;

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const node_path_1 = __importDefault(require("node:path"));
 const upload_routes_1 = __importDefault(require("./routes/upload.routes"));
+const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const app = (0, express_1.default)();
 const cors = require("cors");
 app.set("trust proxy", true);
@@ -47,6 +48,7 @@ app.get("/health", (_req, res) => {
     });
 });
 app.use("/api/upload", upload_routes_1.default);
+app.use("/api/auth", auth_routes_1.default);
 app.use((error, _req, res, _next) => {
     if (error.message.includes("Only image and video")) {
         res.status(400).json({ message: error.message });
