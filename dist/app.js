@@ -50,12 +50,34 @@ app.get("/health", (_req, res) => {
 app.use("/api/upload", upload_routes_1.default);
 app.use("/api/auth", auth_routes_1.default);
 app.use((error, _req, res, _next) => {
+    console.error("[API ERROR]", error);
+    const message = error.message || "Internal server error";
     if (error.message.includes("Only image and video")) {
         res.status(400).json({ message: error.message });
         return;
     }
     if (error.message.includes("File too large")) {
         res.status(400).json({ message: "File exceeds 50MB limit" });
+        return;
+    }
+    if (message.includes("Invalid email or password") || message.includes("Invalid token")) {
+        res.status(401).json({ message });
+        return;
+    }
+    if (message.includes("verify your email")) {
+        res.status(403).json({ message });
+        return;
+    }
+    if (message.includes("required") ||
+        message.includes("already exists") ||
+        message.includes("not found") ||
+        message.includes("Invalid")) {
+        res.status(400).json({ message });
+        return;
+    }
+    const parseError = error;
+    if (parseError.type === "entity.parse.failed" || parseError.status === 400 || parseError.statusCode === 400) {
+        res.status(400).json({ message: "Invalid JSON body" });
         return;
     }
     res.status(500).json({ message: "Internal server error" });

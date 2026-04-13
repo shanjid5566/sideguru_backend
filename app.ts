@@ -63,6 +63,9 @@ app.get("/health", (_req: Request, res: Response) => {
 app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
+  console.error("[API ERROR]", error);
+  const message = error.message || "Internal server error";
+
   if (error.message.includes("Only image and video")) {
     res.status(400).json({ message: error.message });
     return;
@@ -70,6 +73,32 @@ app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
 
   if (error.message.includes("File too large")) {
     res.status(400).json({ message: "File exceeds 50MB limit" });
+    return;
+  }
+
+  if (message.includes("Invalid email or password") || message.includes("Invalid token")) {
+    res.status(401).json({ message });
+    return;
+  }
+
+  if (message.includes("verify your email")) {
+    res.status(403).json({ message });
+    return;
+  }
+
+  if (
+    message.includes("required") ||
+    message.includes("already exists") ||
+    message.includes("not found") ||
+    message.includes("Invalid")
+  ) {
+    res.status(400).json({ message });
+    return;
+  }
+
+  const parseError = error as Error & { type?: string; status?: number; statusCode?: number };
+  if (parseError.type === "entity.parse.failed" || parseError.status === 400 || parseError.statusCode === 400) {
+    res.status(400).json({ message: "Invalid JSON body" });
     return;
   }
 
