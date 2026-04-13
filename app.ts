@@ -1,21 +1,78 @@
-import express, { type Request, type Response } from "express";
+import express, { type NextFunction, type Request, type Response } from "express";
+import path from "node:path";
+
+import uploadRouter from "./routes/upload.routes";
 
 const app = express();
+const cors = require("cors") as (options: {
+  origin: (origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) => void;
+  credentials: boolean;
+}) => NextFunction;
+
+app.set("trust proxy", true);
+
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://sideguru.vercel.app",
+];
+
+const corsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) => {
+    // Allow non-browser requests (Postman/server-to-server) and explicit frontend origins.
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error("Origin not allowed by CORS"));
+  },
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
+
+// Keep popup-based auth flows (e.g., Firebase Google sign-in) compatible.
+app.use((_req: Request, res: Response, next: NextFunction) => {
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  res.setHeader("Cross-Origin-Embedder-Policy", "unsafe-none");
+  next();
+});
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 app.get("/", (_req: Request, res: Response) => {
   res.json({ message: "SideGuru backend is running" });
 });
 
 // Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'OK', 
-    message: 'SideGurus API Server is running',
+app.get("/health", (_req: Request, res: Response) => {
+  res.status(200).json({
+    status: "OK",
+    message: "SideGurus API Server is running",
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || "development",
   });
+});
+
+app.use("/api/upload", uploadRouter);
+
+app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
+  if (error.message.includes("Only image and video")) {
+    res.status(400).json({ message: error.message });
+    return;
+  }
+
+  if (error.message.includes("File too large")) {
+    res.status(400).json({ message: "File exceeds 50MB limit" });
+    return;
+  }
+
+  res.status(500).json({ message: "Internal server error" });
 });
 
 export default app;
