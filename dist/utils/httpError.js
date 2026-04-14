@@ -4,6 +4,7 @@ exports.createHttpError = void 0;
 const createHttpError = (statusCode, message) => {
     const error = new Error(message);
     error.statusCode = statusCode;
+    error.status = statusCode;
     return error;
 };
 exports.createHttpError = createHttpError;

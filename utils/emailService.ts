@@ -1,19 +1,116 @@
+import nodemailer, { type Transporter } from "nodemailer";
+
+type ContactMessageInput = {
+  toEmail: string;
+  senderName: string;
+  senderEmail: string;
+  message: string;
+};
+
 class EmailService {
-  async sendRegistrationOTP(_email: string, _otp: string, _fullName: string): Promise<boolean> {
-    return false;
+  private transporter: Transporter | null = null;
+
+  constructor() {
+    this.initializeTransporter();
   }
 
-  async sendPasswordResetOTP(_email: string, _otp: string): Promise<boolean> {
-    return false;
+  private initializeTransporter(): void {
+    try {
+      this.transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST || "smtp.gmail.com",
+        port: Number.parseInt(process.env.SMTP_PORT || "587", 10),
+        secure: process.env.SMTP_SECURE === "true",
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+
+      this.transporter.verify((error: Error | null) => {
+        if (error) {
+          console.error("Email service configuration error:", error.message);
+        } else {
+          console.log("Email service is ready to send emails");
+        }
+      });
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error("Failed to initialize email service:", message);
+      this.transporter = null;
+    }
   }
 
-  async sendContactMessage(_input: {
-    toEmail: string;
-    senderName: string;
-    senderEmail: string;
-    message: string;
-  }): Promise<boolean> {
-    return false;
+  async sendRegistrationOTP(email: string, otp: string, fullName = "User"): Promise<boolean> {
+    try {
+      if (!this.transporter) {
+        return false;
+      }
+
+      const mailOptions = {
+        from: `"SideGurus" <${process.env.EMAIL_FROM || process.env.SMTP_USER || "no-reply@sidegurus.com"}>`,
+        to: email,
+        subject: "Verify Your Email - SideGurus",
+        html: `<p>Hello ${fullName},</p><p>Your verification code is <strong>${otp}</strong>.</p><p>This code expires in 15 minutes.</p>`,
+        text: `Hello ${fullName},\n\nYour verification code is: ${otp}\n\nThis code expires in 15 minutes.`,
+      };
+
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log(`Registration OTP email sent to ${email} (Message ID: ${info.messageId})`);
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error(`Failed to send registration OTP email to ${email}:`, message);
+      return false;
+    }
+  }
+
+  async sendPasswordResetOTP(email: string, otp: string): Promise<boolean> {
+    try {
+      if (!this.transporter) {
+        return false;
+      }
+
+      const mailOptions = {
+        from: `"SideGurus" <${process.env.EMAIL_FROM || process.env.SMTP_USER || "no-reply@sidegurus.com"}>`,
+        to: email,
+        subject: "Password Reset Code - SideGurus",
+        html: `<p>Password reset requested.</p><p>Your reset code is <strong>${otp}</strong>.</p><p>This code expires in 15 minutes.</p>`,
+        text: `Password reset requested.\n\nYour reset code is: ${otp}\n\nThis code expires in 15 minutes.`,
+      };
+
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log(`Password reset OTP email sent to ${email} (Message ID: ${info.messageId})`);
+      return true;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error";
+      console.error(`Failed to send password reset OTP email to ${email}:`, message);
+      return false;
+    }
+  }
+
+  async sendContactMessage({ toEmail, senderName, senderEmail, message }: ContactMessageInput): Promise<boolean> {
+    try {
+      if (!this.transporter) {
+        return false;
+      }
+
+      const mailOptions = {
+        from: `"SideGurus Contact Form" <${process.env.EMAIL_FROM || process.env.SMTP_USER || "no-reply@sidegurus.com"}>`,
+        to: toEmail,
+        replyTo: senderEmail,
+        subject: `New Contact Message from ${senderName}`,
+        html: `<p><strong>Name:</strong> ${senderName}</p><p><strong>Email:</strong> ${senderEmail}</p><p><strong>Message:</strong></p><p>${message}</p>`,
+        text: `New Contact Message\n\nName: ${senderName}\nEmail: ${senderEmail}\n\nMessage:\n${message}`,
+      };
+
+      const info = await this.transporter.sendMail(mailOptions);
+      console.log(`Contact message email sent to ${toEmail} (Message ID: ${info.messageId})`);
+      return true;
+    } catch (error) {
+      const errMessage = error instanceof Error ? error.message : "Unknown error";
+      console.error(`Failed to send contact message email to ${toEmail}:`, errMessage);
+      return false;
+    }
   }
 }
 
