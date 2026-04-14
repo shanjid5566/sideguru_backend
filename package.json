@@ -4,10 +4,10 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon",
-    "build": "prisma generate --schema=prisma/schema && tsc -p tsconfig.json",
+    "dev": "node init && nodemon",
+    "build": "node init && prisma generate --schema=prisma/schema && tsc -p tsconfig.json",
     "postinstall": "prisma generate --schema=prisma/schema",
-    "start": "node dist/server.js",
+    "start": "node init && node dist/server.js",
     "seed": "tsx prisma/seed.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -38,6 +38,7 @@
     "firebase-admin": "^13.8.0",
     "jsonwebtoken": "^9.0.3",
     "multer": "^2.1.1",
+    "node-fetch": "^3.3.2",
     "nodemailer": "^8.0.5",
     "pg": "^8.20.0",
     "prisma": "^7.7.0",
