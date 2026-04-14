@@ -16,6 +16,7 @@ const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"))
 const event_routes_1 = __importDefault(require("./routes/event.routes"));
 const listing_routes_1 = __importDefault(require("./routes/listing.routes"));
 const location_routes_1 = __importDefault(require("./routes/location.routes"));
+const pricing_routes_1 = __importDefault(require("./routes/pricing.routes"));
 const app = (0, express_1.default)();
 const cors = require("cors");
 app.set("trust proxy", true);
@@ -67,6 +68,7 @@ app.use("/api/dashboard", dashboard_routes_1.default);
 app.use("/api/events", event_routes_1.default);
 app.use("/api/listings", listing_routes_1.default);
 app.use("/api/locations", location_routes_1.default);
+app.use("/api/pricing", pricing_routes_1.default);
 app.use((error, _req, res, _next) => {
     console.error("[API ERROR]", error);
     const message = error.message || "Internal server error";

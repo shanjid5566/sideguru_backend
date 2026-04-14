@@ -12,6 +12,7 @@ import dashboardRouter from "./routes/dashboard.routes";
 import eventRouter from "./routes/event.routes";
 import listingRouter from "./routes/listing.routes";
 import locationRouter from "./routes/location.routes";
+import pricingRouter from "./routes/pricing.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -80,6 +81,7 @@ app.use("/api/dashboard", dashboardRouter);
 app.use("/api/events", eventRouter);
 app.use("/api/listings", listingRouter);
 app.use("/api/locations", locationRouter);
+app.use("/api/pricing", pricingRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
   console.error("[API ERROR]", error);
   const message = error.message || "Internal server error";
