@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const event_controller_1 = __importDefault(require("../controllers/event.controller"));
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const upload_middleware_1 = require("../middlewares/upload.middleware");
+const router = (0, express_1.Router)();
+router.get("/admin", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), event_controller_1.default.getAdminEvents.bind(event_controller_1.default));
+router.get("/me", auth_middleware_1.authenticate, event_controller_1.default.getMyEvents.bind(event_controller_1.default));
+router.get("/", event_controller_1.default.getPublicEvents.bind(event_controller_1.default));
+router.post("/", auth_middleware_1.authenticate, upload_middleware_1.eventListingUpload, event_controller_1.default.createEvent.bind(event_controller_1.default));
+router.put("/me/:id", auth_middleware_1.authenticate, upload_middleware_1.eventListingUpload, event_controller_1.default.updateEvent.bind(event_controller_1.default));
+router.delete("/me/:id", auth_middleware_1.authenticate, event_controller_1.default.deleteMyEvent.bind(event_controller_1.default));
+router.post("/:id/purchase", auth_middleware_1.authenticate, event_controller_1.default.createEventPaymentIntent.bind(event_controller_1.default));
+router.post("/:id/purchase/confirm", auth_middleware_1.authenticate, event_controller_1.default.confirmEventListingPurchase.bind(event_controller_1.default));
+router.post("/:id/renew", auth_middleware_1.authenticate, event_controller_1.default.createEventRenewalCheckoutSession.bind(event_controller_1.default));
+router.post("/:id/renew/confirm", auth_middleware_1.authenticate, event_controller_1.default.confirmEventRenewal.bind(event_controller_1.default));
+router.post("/:id/report-spam", event_controller_1.default.reportEventSpam.bind(event_controller_1.default));
+router.patch("/:id/status", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), event_controller_1.default.updateEventStatus.bind(event_controller_1.default));
+router.delete("/:id", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), event_controller_1.default.deleteEvent.bind(event_controller_1.default));
+router.get("/:id", event_controller_1.default.getEventById.bind(event_controller_1.default));
+exports.default = router;
