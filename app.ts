@@ -8,6 +8,7 @@ import adminListingRouter from "./routes/admin-listing.routes";
 import adminRevenueRouter from "./routes/admin-revenue.routes";
 import adminUserRouter from "./routes/admin-user.routes";
 import categoryRouter from "./routes/category.routes";
+import dashboardRouter from "./routes/dashboard.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -72,6 +73,7 @@ app.use("/api/admin/categories", adminCategoryRouter);
 app.use("/api/admin/listings", adminListingRouter);
 app.use("/api/admin/revenue", adminRevenueRouter);
 app.use("/api/admin/users", adminUserRouter);
+app.use("/api/dashboard", dashboardRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
   console.error("[API ERROR]", error);
   const message = error.message || "Internal server error";

@@ -12,6 +12,7 @@ const admin_listing_routes_1 = __importDefault(require("./routes/admin-listing.r
 const admin_revenue_routes_1 = __importDefault(require("./routes/admin-revenue.routes"));
 const admin_user_routes_1 = __importDefault(require("./routes/admin-user.routes"));
 const category_routes_1 = __importDefault(require("./routes/category.routes"));
+const dashboard_routes_1 = __importDefault(require("./routes/dashboard.routes"));
 const app = (0, express_1.default)();
 const cors = require("cors");
 app.set("trust proxy", true);
@@ -59,6 +60,7 @@ app.use("/api/admin/categories", admin_category_routes_1.default);
 app.use("/api/admin/listings", admin_listing_routes_1.default);
 app.use("/api/admin/revenue", admin_revenue_routes_1.default);
 app.use("/api/admin/users", admin_user_routes_1.default);
+app.use("/api/dashboard", dashboard_routes_1.default);
 app.use((error, _req, res, _next) => {
     console.error("[API ERROR]", error);
     const message = error.message || "Internal server error";
