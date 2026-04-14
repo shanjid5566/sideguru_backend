@@ -6,6 +6,15 @@ class EmailService {
   async sendPasswordResetOTP(_email: string, _otp: string): Promise<boolean> {
     return false;
   }
+
+  async sendContactMessage(_input: {
+    toEmail: string;
+    senderName: string;
+    senderEmail: string;
+    message: string;
+  }): Promise<boolean> {
+    return false;
+  }
 }
 
 const emailService = new EmailService();

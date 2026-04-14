@@ -7,6 +7,9 @@ class EmailService {
     async sendPasswordResetOTP(_email, _otp) {
         return false;
     }
+    async sendContactMessage(_input) {
+        return false;
+    }
 }
 const emailService = new EmailService();
 exports.default = emailService;
