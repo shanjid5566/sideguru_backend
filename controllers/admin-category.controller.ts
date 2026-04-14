@@ -22,6 +22,14 @@ const sendResponse = (
   });
 };
 
+const toSingleParam = (value: string | string[] | undefined): string => {
+  if (Array.isArray(value)) {
+    return value[0] || "";
+  }
+
+  return value || "";
+};
+
 class AdminCategoryController {
   async updateServiceCategoryAndSubcategory(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
@@ -59,6 +67,36 @@ class AdminCategoryController {
         baseUrl: getBaseUrl(req),
       });
 
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteServiceCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await adminCategoryService.deleteServiceCategory(toSingleParam(req.params.categoryId));
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteServiceSubcategory(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await adminCategoryService.deleteServiceSubcategory(
+        toSingleParam(req.params.categoryId),
+        toSingleParam(req.params.subcategoryId),
+      );
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteEventCategory(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await adminCategoryService.deleteEventCategory(toSingleParam(req.params.categoryId));
       sendResponse(res, result);
     } catch (error) {
       next(error);

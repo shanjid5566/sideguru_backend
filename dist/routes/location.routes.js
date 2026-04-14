@@ -11,5 +11,9 @@ router.get("/countries-with-regions", location_controller_1.default.getCountries
 router.get("/countries", location_controller_1.default.getCountries.bind(location_controller_1.default));
 router.get("/countries/:countryId/regions", location_controller_1.default.getRegionsByCountryId.bind(location_controller_1.default));
 router.post("/countries", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.createCountry.bind(location_controller_1.default));
+router.patch("/countries/:countryId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.updateCountry.bind(location_controller_1.default));
+router.delete("/countries/:countryId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.deleteCountry.bind(location_controller_1.default));
 router.post("/countries/:countryId/regions", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.createRegion.bind(location_controller_1.default));
+router.patch("/countries/:countryId/regions/:regionId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.updateRegion.bind(location_controller_1.default));
+router.delete("/countries/:countryId/regions/:regionId", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), location_controller_1.default.deleteRegion.bind(location_controller_1.default));
 exports.default = router;

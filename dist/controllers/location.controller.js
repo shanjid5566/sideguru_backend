@@ -35,6 +35,42 @@ class LocationController {
             next(error);
         }
     }
+    async updateCountry(req, res, next) {
+        try {
+            const result = await location_service_1.default.updateCountry(toSingleParam(req.params.countryId), req.body);
+            sendResponse(res, result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async deleteCountry(req, res, next) {
+        try {
+            const result = await location_service_1.default.deleteCountry(toSingleParam(req.params.countryId));
+            sendResponse(res, result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async updateRegion(req, res, next) {
+        try {
+            const result = await location_service_1.default.updateRegion(toSingleParam(req.params.countryId), toSingleParam(req.params.regionId), req.body);
+            sendResponse(res, result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async deleteRegion(req, res, next) {
+        try {
+            const result = await location_service_1.default.deleteRegion(toSingleParam(req.params.countryId), toSingleParam(req.params.regionId));
+            sendResponse(res, result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
     async getCountries(_req, res, next) {
         try {
             const result = await location_service_1.default.getCountries();

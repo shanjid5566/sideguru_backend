@@ -258,6 +258,132 @@ class AdminCategoryService {
       },
     };
   }
+
+  async deleteServiceCategory(categoryId: string) {
+    if (!categoryId) {
+      throw createHttpError(400, "categoryId is required");
+    }
+
+    const category = await prisma.category.findFirst({
+      where: {
+        id: categoryId,
+        type: "SERVICE",
+      },
+      include: {
+        subCategories: {
+          select: { id: true },
+        },
+      },
+    });
+
+    if (!category) {
+      throw createHttpError(404, "Service category not found");
+    }
+
+    await prisma.category.delete({
+      where: { id: categoryId },
+    });
+
+    return {
+      statusCode: 200,
+      message: "Service category and all its subcategories deleted successfully",
+      data: {
+        action: "deleted",
+        type: "category",
+        categoryId,
+        deletedSubcategoriesCount: category.subCategories.length,
+      },
+    };
+  }
+
+  async deleteServiceSubcategory(categoryId: string, subcategoryId: string) {
+    if (!categoryId) {
+      throw createHttpError(400, "categoryId is required");
+    }
+
+    if (!subcategoryId) {
+      throw createHttpError(400, "subcategoryId is required");
+    }
+
+    const category = await prisma.category.findFirst({
+      where: {
+        id: categoryId,
+        type: "SERVICE",
+      },
+      select: { id: true },
+    });
+
+    if (!category) {
+      throw createHttpError(404, "Service category not found");
+    }
+
+    const subcategory = await prisma.subCategory.findFirst({
+      where: {
+        id: subcategoryId,
+        categoryId,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    if (!subcategory) {
+      throw createHttpError(404, "Subcategory not found in this category");
+    }
+
+    await prisma.subCategory.delete({
+      where: { id: subcategoryId },
+    });
+
+    return {
+      statusCode: 200,
+      message: "Service subcategory deleted successfully",
+      data: {
+        action: "deleted",
+        type: "subcategory",
+        categoryId,
+        subcategoryId,
+        subcategoryName: subcategory.name,
+      },
+    };
+  }
+
+  async deleteEventCategory(categoryId: string) {
+    if (!categoryId) {
+      throw createHttpError(400, "categoryId is required");
+    }
+
+    const category = await prisma.category.findFirst({
+      where: {
+        id: categoryId,
+        type: "EVENT",
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+
+    if (!category) {
+      throw createHttpError(404, "Event category not found");
+    }
+
+    await prisma.category.delete({
+      where: { id: categoryId },
+    });
+
+    return {
+      statusCode: 200,
+      message: "Event category deleted successfully",
+      data: {
+        action: "deleted",
+        type: "category",
+        categoryId,
+        categoryName: category.name,
+      },
+    };
+  }
 }
 
 const adminCategoryService = new AdminCategoryService();

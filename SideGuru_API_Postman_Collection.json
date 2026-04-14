@@ -112,11 +112,63 @@
           "response": []
         },
         {
-          "name": "Login",
+          "name": "Admin Login (Auto Set adminToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const token = json.token || (json.data && (json.data.token || json.data.accessToken));",
+                  "if (token) {",
+                  "  pm.collectionVariables.set('adminToken', token);",
+                  "  console.log('adminToken updated');",
+                  "} else {",
+                  "  console.warn('Token not found in login response');",
+                  "}"
+                ]
+              }
+            }
+          ],
           "request": {
             "method": "POST",
             "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@sidegurus.com\",\n  \"password\": \"Admin@123\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "User Login (Auto Set userToken)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "let json = {};",
+                  "try { json = pm.response.json(); } catch (e) {}",
+                  "const token = json.token || (json.data && (json.data.token || json.data.accessToken));",
+                  "if (token) {",
+                  "  pm.collectionVariables.set('userToken', token);",
+                  "  console.log('userToken updated');",
+                  "} else {",
+                  "  console.warn('Token not found in login response');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"User@123\"\n}" },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
               "host": ["{{baseUrl}}"],
@@ -260,8 +312,12 @@
     {
       "name": "Admin Categories",
       "item": [
-        { "name": "Update/Delete Service Category or Subcategory", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"categoryName\": \"Updated Service\",\n  \"subcategoryId\": \"{{subCategoryId}}\",\n  \"subcategoryName\": \"Updated Sub\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service"] } }, "response": [] },
-        { "name": "Update/Delete Event Category", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{eventCategoryId}}\",\n  \"categoryName\": \"Updated Event\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/event", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "event"] } }, "response": [] }
+        { "name": "Update Service Category", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"categoryName\": \"Updated Service\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service"] } }, "response": [] },
+        { "name": "Delete Service Category", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/categories/service/{{serviceCategoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service", "{{serviceCategoryId}}"] } }, "response": [] },
+        { "name": "Update Subcategory", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"subcategoryId\": \"{{subCategoryId}}\",\n  \"subcategoryName\": \"Updated Sub\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service"] } }, "response": [] },
+        { "name": "Delete Subcategory", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/categories/service/{{serviceCategoryId}}/subcategories/{{subCategoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service", "{{serviceCategoryId}}", "subcategories", "{{subCategoryId}}"] } }, "response": [] },
+        { "name": "Update Event Category", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{eventCategoryId}}\",\n  \"categoryName\": \"Updated Event\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/event", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "event"] } }, "response": [] },
+        { "name": "Delete Event Category", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/categories/event/{{eventCategoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "event", "{{eventCategoryId}}"] } }, "response": [] }
       ]
     },
     {

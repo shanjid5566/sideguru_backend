@@ -40,6 +40,52 @@ class LocationController {
     }
   }
 
+  async updateCountry(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await locationService.updateCountry(
+        toSingleParam(req.params.countryId),
+        req.body as { name?: string },
+      );
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteCountry(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await locationService.deleteCountry(toSingleParam(req.params.countryId));
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async updateRegion(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await locationService.updateRegion(
+        toSingleParam(req.params.countryId),
+        toSingleParam(req.params.regionId),
+        req.body as { name?: string },
+      );
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteRegion(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await locationService.deleteRegion(
+        toSingleParam(req.params.countryId),
+        toSingleParam(req.params.regionId),
+      );
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async getCountries(_req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const result = await locationService.getCountries();
