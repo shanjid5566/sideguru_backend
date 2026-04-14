@@ -11,6 +11,7 @@ const admin_category_routes_1 = __importDefault(require("./routes/admin-category
 const admin_listing_routes_1 = __importDefault(require("./routes/admin-listing.routes"));
 const admin_revenue_routes_1 = __importDefault(require("./routes/admin-revenue.routes"));
 const admin_user_routes_1 = __importDefault(require("./routes/admin-user.routes"));
+const category_routes_1 = __importDefault(require("./routes/category.routes"));
 const app = (0, express_1.default)();
 const cors = require("cors");
 app.set("trust proxy", true);
@@ -53,6 +54,7 @@ app.get("/health", (_req, res) => {
 });
 app.use("/api/upload", upload_routes_1.default);
 app.use("/api/auth", auth_routes_1.default);
+app.use("/api/categories", category_routes_1.default);
 app.use("/api/admin/categories", admin_category_routes_1.default);
 app.use("/api/admin/listings", admin_listing_routes_1.default);
 app.use("/api/admin/revenue", admin_revenue_routes_1.default);

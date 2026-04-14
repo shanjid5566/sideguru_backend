@@ -7,6 +7,7 @@ import adminCategoryRouter from "./routes/admin-category.routes";
 import adminListingRouter from "./routes/admin-listing.routes";
 import adminRevenueRouter from "./routes/admin-revenue.routes";
 import adminUserRouter from "./routes/admin-user.routes";
+import categoryRouter from "./routes/category.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -66,6 +67,7 @@ app.get("/health", (_req: Request, res: Response) => {
 
 app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRouter);
+app.use("/api/categories", categoryRouter);
 app.use("/api/admin/categories", adminCategoryRouter);
 app.use("/api/admin/listings", adminListingRouter);
 app.use("/api/admin/revenue", adminRevenueRouter);
