@@ -8,14 +8,18 @@ let stripeClient: StripeClient | null = null;
 
 export const getStripeClient = (): StripeClient => {
   if (!process.env.STRIPE_SECRET_KEY) {
-    throw new Error("STRIPE_SECRET_KEY is not configured");
+    const error = new Error("STRIPE_SECRET_KEY is not configured") as Error & { statusCode: number };
+    error.statusCode = 500;
+    throw error;
   }
 
   if (!stripeClient) {
-    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY);
+    stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      maxNetworkRetries: 2,
+    });
   }
 
   return stripeClient;
 };
 
-export const getStripePublishableKey = (): string => process.env.STRIPE_PUBLISHABLE_KEY || "";
+export const getStripePublishableKey = (): string | null => process.env.STRIPE_PUBLISHABLE_KEY || null;

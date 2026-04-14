@@ -9,13 +9,17 @@ exports.STRIPE_CURRENCY = (process.env.STRIPE_CURRENCY || "usd").toLowerCase();
 let stripeClient = null;
 const getStripeClient = () => {
     if (!process.env.STRIPE_SECRET_KEY) {
-        throw new Error("STRIPE_SECRET_KEY is not configured");
+        const error = new Error("STRIPE_SECRET_KEY is not configured");
+        error.statusCode = 500;
+        throw error;
     }
     if (!stripeClient) {
-        stripeClient = new stripe_1.default(process.env.STRIPE_SECRET_KEY);
+        stripeClient = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
+            maxNetworkRetries: 2,
+        });
     }
     return stripeClient;
 };
 exports.getStripeClient = getStripeClient;
-const getStripePublishableKey = () => process.env.STRIPE_PUBLISHABLE_KEY || "";
+const getStripePublishableKey = () => process.env.STRIPE_PUBLISHABLE_KEY || null;
 exports.getStripePublishableKey = getStripePublishableKey;
