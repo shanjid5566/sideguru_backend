@@ -4,6 +4,7 @@ import path from "node:path";
 import uploadRouter from "./routes/upload.routes";
 import authRouter from "./routes/auth.routes";
 import adminCategoryRouter from "./routes/admin-category.routes";
+import adminListingRouter from "./routes/admin-listing.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -64,6 +65,7 @@ app.get("/health", (_req: Request, res: Response) => {
 app.use("/api/upload", uploadRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/admin/categories", adminCategoryRouter);
+app.use("/api/admin/listings", adminListingRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
   console.error("[API ERROR]", error);
   const message = error.message || "Internal server error";
