@@ -58,6 +58,18 @@ class PricingController {
     }
   }
 
+  async updatePricingPlan(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const result = await pricingService.updatePricingPlan(
+        toSingleParam(req.params.id),
+        req.body as { title?: string; price?: unknown; duration?: unknown; isActive?: unknown },
+      );
+      sendResponse(res, result);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async deletePricingPlan(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       const result = await pricingService.deletePricingPlan(toSingleParam(req.params.id));

@@ -1,390 +1,378 @@
 {
   "info": {
-    "_postman_id": "e6a6f6fd-f4c8-4d7f-9d65-8b8106f4cf71",
-    "name": "SideGuru API Collection",
+    "_postman_id": "f8f12653-5afc-4b1f-9e06-9f1d4a20cb80",
+    "name": "SideGuru API Collection (All APIs)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Authentication, Admin Category, and Admin Listing APIs for SideGuru backend"
+    "description": "Complete API collection for the current SideGuru backend routes."
   },
   "item": [
     {
-      "name": "Authentication",
+      "name": "System",
       "item": [
         {
-          "name": "Admin Login",
+          "name": "Root",
           "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@sidegurus.com\",\n  \"password\": \"Admin@123\"\n}"
-            },
+            "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/api/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
-            },
-            "description": "Use admin credentials to log in via the shared login endpoint."
-          },
-          "response": []
-        },
-        {
-          "name": "User Login",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"User@123\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "login"
-              ]
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
             }
           },
           "response": []
         },
         {
-          "name": "User Register",
+          "name": "Health",
           "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"User@12345\",\n  \"confirmPassword\": \"User@12345\",\n  \"phoneNumber\": \"+1-555-1234\",\n  \"countryName\": \"United States\",\n  \"regionName\": \"California\"\n}"
-            },
+            "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/api/auth/register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "register"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Login With Google",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idToken\": \"{{firebaseIdToken}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/firebase-login",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "firebase-login"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Register With Google",
-          "request": {
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"idToken\": \"{{firebaseIdToken}}\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/auth/firebase-register",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "auth",
-                "firebase-register"
-              ]
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
             }
           },
           "response": []
         }
+      ]
+    },
+    {
+      "name": "Upload",
+      "item": [
+        {
+          "name": "Upload File",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "file",
+                  "type": "file",
+                  "src": ""
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "upload"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"User@12345\",\n  \"confirmPassword\": \"User@12345\",\n  \"phoneNumber\": \"+15551234\",\n  \"countryName\": \"United States\",\n  \"regionName\": \"California\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify Registration OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\",\n  \"otp\": \"12345\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-registration-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "verify-registration-otp"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Resend Registration OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/resend-registration-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "resend-registration-otp"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@sidegurus.com\",\n  \"password\": \"Admin@123\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Firebase Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idToken\": \"{{firebaseIdToken}}\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/firebase-register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "firebase-register"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Firebase Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"idToken\": \"{{firebaseIdToken}}\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/firebase-login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "firebase-login"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "forgot-password"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\",\n  \"otp\": \"12345\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "verify-otp"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"john@example.com\",\n  \"otp\": \"12345\",\n  \"password\": \"NewPassword@123\",\n  \"confirmPassword\": \"NewPassword@123\"\n}" },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "reset-password"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "profile"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "fullName", "value": "John Updated", "type": "text" }, { "key": "profileImage", "type": "file", "src": "" }] },
+            "url": { "raw": "{{baseUrl}}/api/auth/profile", "host": ["{{baseUrl}}"], "path": ["api", "auth", "profile"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Account Settings",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "url": { "raw": "{{baseUrl}}/api/auth/account-settings", "host": ["{{baseUrl}}"], "path": ["api", "auth", "account-settings"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Account Settings",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "body": { "mode": "formdata", "formdata": [{ "key": "fullName", "value": "John Updated", "type": "text" }] },
+            "url": { "raw": "{{baseUrl}}/api/auth/account-settings", "host": ["{{baseUrl}}"], "path": ["api", "auth", "account-settings"] }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{userToken}}" }],
+            "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"Old@123\",\n  \"newPassword\": \"New@123456\",\n  \"confirmPassword\": \"New@123456\"\n}" },
+            "url": { "raw": "{{baseUrl}}/api/auth/change-password", "host": ["{{baseUrl}}"], "path": ["api", "auth", "change-password"] }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        { "name": "Search Categories", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/categories/search?q=clean", "host": ["{{baseUrl}}"], "path": ["api", "categories", "search"], "query": [{ "key": "q", "value": "clean" }] } }, "response": [] },
+        { "name": "Get Service Categories", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "categories", "service"] } }, "response": [] },
+        { "name": "Get Service Category By Id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/categories/service/{{serviceCategoryId}}", "host": ["{{baseUrl}}"], "path": ["api", "categories", "service", "{{serviceCategoryId}}"] } }, "response": [] },
+        { "name": "Create Subcategory", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Sub Name\"\n}" }, "url": { "raw": "{{baseUrl}}/api/categories/service/{{serviceCategoryId}}/subcategories", "host": ["{{baseUrl}}"], "path": ["api", "categories", "service", "{{serviceCategoryId}}", "subcategories"] } }, "response": [] },
+        { "name": "Create Service Category", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "name", "value": "Home Services", "type": "text" }, { "key": "image", "type": "file", "src": "" }] }, "url": { "raw": "{{baseUrl}}/api/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "categories", "service"] } }, "response": [] },
+        { "name": "Get Event Categories", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/categories/event", "host": ["{{baseUrl}}"], "path": ["api", "categories", "event"] } }, "response": [] },
+        { "name": "Create Event Category", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "name", "value": "Conferences", "type": "text" }, { "key": "image", "type": "file", "src": "" }] }, "url": { "raw": "{{baseUrl}}/api/categories/event", "host": ["{{baseUrl}}"], "path": ["api", "categories", "event"] } }, "response": [] }
       ]
     },
     {
       "name": "Admin Categories",
       "item": [
-        {
-          "name": "Update/Delete Service Category or Subcategory",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"categoryName\": \"Updated Service Category Name\",\n  \"subcategoryId\": \"{{subCategoryId}}\",\n  \"subcategoryName\": \"Updated Subcategory Name\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/categories/service",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "categories",
-                "service"
-              ]
-            },
-            "description": "Use categoryName or subcategoryName as null/empty string to delete the target."
-          },
-          "response": []
-        },
-        {
-          "name": "Update/Delete Event Category",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"categoryId\": \"{{eventCategoryId}}\",\n  \"categoryName\": \"Updated Event Category Name\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/categories/event",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "categories",
-                "event"
-              ]
-            },
-            "description": "Set categoryName to null or empty string to delete the event category."
-          },
-          "response": []
-        }
+        { "name": "Update/Delete Service Category or Subcategory", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"categoryName\": \"Updated Service\",\n  \"subcategoryId\": \"{{subCategoryId}}\",\n  \"subcategoryName\": \"Updated Sub\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/service", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "service"] } }, "response": [] },
+        { "name": "Update/Delete Event Category", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"categoryId\": \"{{eventCategoryId}}\",\n  \"categoryName\": \"Updated Event\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/categories/event", "host": ["{{baseUrl}}"], "path": ["api", "admin", "categories", "event"] } }, "response": [] }
       ]
     },
     {
       "name": "Admin Listings",
       "item": [
-        {
-          "name": "Get All Listings",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/listings?page=1&limit=20&sortBy=createdAt&sortOrder=desc",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "listings"
-              ],
-              "query": [
-                {
-                  "key": "page",
-                  "value": "1"
-                },
-                {
-                  "key": "limit",
-                  "value": "20"
-                },
-                {
-                  "key": "sortBy",
-                  "value": "createdAt"
-                },
-                {
-                  "key": "sortOrder",
-                  "value": "desc"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Get Listing By Id",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "listings",
-                "{{listingId}}"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Update Listing Status",
-          "request": {
-            "method": "PATCH",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"status\": \"APPROVED\"\n}"
-            },
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}/status",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "listings",
-                "{{listingId}}",
-                "status"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Delete Listing",
-          "request": {
-            "method": "DELETE",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminToken}}"
-              }
-            ],
-            "url": {
-              "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "api",
-                "admin",
-                "listings",
-                "{{listingId}}"
-              ]
-            }
-          },
-          "response": []
-        }
+        { "name": "Get All Listings", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/listings", "host": ["{{baseUrl}}"], "path": ["api", "admin", "listings"] } }, "response": [] },
+        { "name": "Get Listing By Id", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "listings", "{{listingId}}"] } }, "response": [] },
+        { "name": "Update Listing Status", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"APPROVED\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "admin", "listings", "{{listingId}}", "status"] } }, "response": [] },
+        { "name": "Delete Listing", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/listings/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "listings", "{{listingId}}"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Admin Revenue",
+      "item": [
+        { "name": "Today", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/revenue/today", "host": ["{{baseUrl}}"], "path": ["api", "admin", "revenue", "today"] } }, "response": [] },
+        { "name": "This Month", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/revenue/this-month", "host": ["{{baseUrl}}"], "path": ["api", "admin", "revenue", "this-month"] } }, "response": [] },
+        { "name": "Total", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/revenue/total", "host": ["{{baseUrl}}"], "path": ["api", "admin", "revenue", "total"] } }, "response": [] },
+        { "name": "Sales Performance", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/revenue/sales-performance", "host": ["{{baseUrl}}"], "path": ["api", "admin", "revenue", "sales-performance"] } }, "response": [] },
+        { "name": "Stats", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/revenue/stats", "host": ["{{baseUrl}}"], "path": ["api", "admin", "revenue", "stats"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Admin Users",
+      "item": [
+        { "name": "Get Users", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/users", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users"] } }, "response": [] },
+        { "name": "Get User By Id", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "{{userId}}"] } }, "response": [] },
+        { "name": "Update User", "request": { "method": "PUT", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"fullName\": \"Updated Name\"\n}" }, "url": { "raw": "{{baseUrl}}/api/admin/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "{{userId}}"] } }, "response": [] },
+        { "name": "Delete User", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/admin/users/{{userId}}", "host": ["{{baseUrl}}"], "path": ["api", "admin", "users", "{{userId}}"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        { "name": "Admin Overview", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/dashboard/overview", "host": ["{{baseUrl}}"], "path": ["api", "dashboard", "overview"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Listings (Service)",
+      "item": [
+        { "name": "Public Services", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/listings", "host": ["{{baseUrl}}"], "path": ["api", "listings"] } }, "response": [] },
+        { "name": "Service By Id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}"] } }, "response": [] },
+        { "name": "My Services", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "url": { "raw": "{{baseUrl}}/api/listings/me", "host": ["{{baseUrl}}"], "path": ["api", "listings", "me"] } }, "response": [] },
+        { "name": "Create Service", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "title", "value": "Service title", "type": "text" }, { "key": "description", "value": "Service description", "type": "text" }, { "key": "price", "value": "100", "type": "text" }, { "key": "categoryId", "value": "{{serviceCategoryId}}", "type": "text" }, { "key": "countryId", "value": "{{countryId}}", "type": "text" }, { "key": "regionId", "value": "{{regionId}}", "type": "text" }, { "key": "contactEmail", "value": "owner@example.com", "type": "text" }, { "key": "contactPhone", "value": "+12345678", "type": "text" }, { "key": "mainImage", "type": "file", "src": "" }] }, "url": { "raw": "{{baseUrl}}/api/listings", "host": ["{{baseUrl}}"], "path": ["api", "listings"] } }, "response": [] },
+        { "name": "Update My Service", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "title", "value": "Updated title", "type": "text" }] }, "url": { "raw": "{{baseUrl}}/api/listings/me/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "listings", "me", "{{listingId}}"] } }, "response": [] },
+        { "name": "Delete My Service", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "url": { "raw": "{{baseUrl}}/api/listings/me/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "listings", "me", "{{listingId}}"] } }, "response": [] },
+        { "name": "Admin Services", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/listings/admin", "host": ["{{baseUrl}}"], "path": ["api", "listings", "admin"] } }, "response": [] },
+        { "name": "Update Service Status", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"APPROVED\"\n}" }, "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "status"] } }, "response": [] },
+        { "name": "Report Service Spam", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/report-spam", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "report-spam"] } }, "response": [] },
+        { "name": "Delete Service (Admin)", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}"] } }, "response": [] },
+        { "name": "Create Service Purchase Session", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"planId\": \"{{pricingPlanId}}\",\n  \"successUrl\": \"http://localhost:5173/success\",\n  \"cancelUrl\": \"http://localhost:5173/cancel\"\n}" }, "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/purchase", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "purchase"] } }, "response": [] },
+        { "name": "Confirm Service Purchase", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"planId\": \"{{pricingPlanId}}\",\n  \"checkoutSessionId\": \"{{checkoutSessionId}}\"\n}" }, "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/purchase/confirm", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "purchase", "confirm"] } }, "response": [] },
+        { "name": "Create Service Renewal Session", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"planId\": \"{{pricingPlanId}}\",\n  \"successUrl\": \"http://localhost:5173/success\",\n  \"cancelUrl\": \"http://localhost:5173/cancel\"\n}" }, "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/renew", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "renew"] } }, "response": [] },
+        { "name": "Confirm Service Renewal", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"planId\": \"{{pricingPlanId}}\",\n  \"checkoutSessionId\": \"{{checkoutSessionId}}\"\n}" }, "url": { "raw": "{{baseUrl}}/api/listings/{{listingId}}/renew/confirm", "host": ["{{baseUrl}}"], "path": ["api", "listings", "{{listingId}}", "renew", "confirm"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Events",
+      "item": [
+        { "name": "Public Events", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/events", "host": ["{{baseUrl}}"], "path": ["api", "events"] } }, "response": [] },
+        { "name": "Event By Id", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/events/{{eventListingId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventListingId}}"] } }, "response": [] },
+        { "name": "My Events", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "url": { "raw": "{{baseUrl}}/api/events/me", "host": ["{{baseUrl}}"], "path": ["api", "events", "me"] } }, "response": [] },
+        { "name": "Create Event", "request": { "method": "POST", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "title", "value": "Event title", "type": "text" }, { "key": "description", "value": "Event description", "type": "text" }, { "key": "categoryId", "value": "{{eventCategoryId}}", "type": "text" }, { "key": "countryId", "value": "{{countryId}}", "type": "text" }, { "key": "regionId", "value": "{{regionId}}", "type": "text" }, { "key": "contactEmail", "value": "host@example.com", "type": "text" }, { "key": "contactPhone", "value": "+12345678", "type": "text" }, { "key": "startDate", "value": "2026-05-01T10:00:00.000Z", "type": "text" }, { "key": "endDate", "value": "2026-05-02T10:00:00.000Z", "type": "text" }, { "key": "mainImage", "type": "file", "src": "" }] }, "url": { "raw": "{{baseUrl}}/api/events", "host": ["{{baseUrl}}"], "path": ["api", "events"] } }, "response": [] },
+        { "name": "Update My Event", "request": { "method": "PUT", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "body": { "mode": "formdata", "formdata": [{ "key": "title", "value": "Updated event", "type": "text" }] }, "url": { "raw": "{{baseUrl}}/api/events/me/{{eventListingId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "me", "{{eventListingId}}"] } }, "response": [] },
+        { "name": "Delete My Event", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "url": { "raw": "{{baseUrl}}/api/events/me/{{eventListingId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "me", "{{eventListingId}}"] } }, "response": [] },
+        { "name": "Admin Events", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/events/admin", "host": ["{{baseUrl}}"], "path": ["api", "events", "admin"] } }, "response": [] },
+        { "name": "Update Event Status", "request": { "method": "PATCH", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"status\": \"APPROVED\"\n}" }, "url": { "raw": "{{baseUrl}}/api/events/{{eventListingId}}/status", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventListingId}}", "status"] } }, "response": [] },
+        { "name": "Report Event Spam", "request": { "method": "POST", "url": { "raw": "{{baseUrl}}/api/events/{{eventListingId}}/report-spam", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventListingId}}", "report-spam"] } }, "response": [] },
+        { "name": "Delete Event (Admin)", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/events/{{eventListingId}}", "host": ["{{baseUrl}}"], "path": ["api", "events", "{{eventListingId}}"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Locations",
+      "item": [
+        { "name": "Countries With Regions", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/locations/countries-with-regions", "host": ["{{baseUrl}}"], "path": ["api", "locations", "countries-with-regions"] } }, "response": [] },
+        { "name": "Get Countries", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/locations/countries", "host": ["{{baseUrl}}"], "path": ["api", "locations", "countries"] } }, "response": [] },
+        { "name": "Get Regions By Country", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/locations/countries/{{countryId}}/regions", "host": ["{{baseUrl}}"], "path": ["api", "locations", "countries", "{{countryId}}", "regions"] } }, "response": [] },
+        { "name": "Create Country", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"United States\"\n}" }, "url": { "raw": "{{baseUrl}}/api/locations/countries", "host": ["{{baseUrl}}"], "path": ["api", "locations", "countries"] } }, "response": [] },
+        { "name": "Create Region", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"California\"\n}" }, "url": { "raw": "{{baseUrl}}/api/locations/countries/{{countryId}}/regions", "host": ["{{baseUrl}}"], "path": ["api", "locations", "countries", "{{countryId}}", "regions"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Pricing",
+      "item": [
+        { "name": "Get Active Plans", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/pricing", "host": ["{{baseUrl}}"], "path": ["api", "pricing"] } }, "response": [] },
+        { "name": "Get Stripe Config", "request": { "method": "GET", "url": { "raw": "{{baseUrl}}/api/pricing/stripe-config", "host": ["{{baseUrl}}"], "path": ["api", "pricing", "stripe-config"] } }, "response": [] },
+        { "name": "Get Pricing Eligibility", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{userToken}}" }], "url": { "raw": "{{baseUrl}}/api/pricing/eligibility", "host": ["{{baseUrl}}"], "path": ["api", "pricing", "eligibility"] } }, "response": [] },
+        { "name": "Create Pricing Plan", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{adminToken}}" }], "body": { "mode": "raw", "raw": "{\n  \"title\": \"Basic Plan\",\n  \"price\": 50,\n  \"duration\": 30,\n  \"isActive\": true\n}" }, "url": { "raw": "{{baseUrl}}/api/pricing", "host": ["{{baseUrl}}"], "path": ["api", "pricing"] } }, "response": [] },
+        { "name": "Delete Pricing Plan", "request": { "method": "DELETE", "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }], "url": { "raw": "{{baseUrl}}/api/pricing/{{pricingPlanId}}", "host": ["{{baseUrl}}"], "path": ["api", "pricing", "{{pricingPlanId}}"] } }, "response": [] }
+      ]
+    },
+    {
+      "name": "Support",
+      "item": [
+        { "name": "Contact Us", "request": { "method": "POST", "header": [{ "key": "Content-Type", "value": "application/json" }], "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"message\": \"Hello, I need help.\"\n}" }, "url": { "raw": "{{baseUrl}}/api/support/contact-us", "host": ["{{baseUrl}}"], "path": ["api", "support", "contact-us"] } }, "response": [] }
       ]
     }
   ],
   "variable": [
-    {
-      "key": "baseUrl",
-      "value": "http://localhost:3000"
-    },
-    {
-      "key": "firebaseIdToken",
-      "value": ""
-    },
-    {
-      "key": "adminToken",
-      "value": ""
-    },
-    {
-      "key": "serviceCategoryId",
-      "value": ""
-    },
-    {
-      "key": "subCategoryId",
-      "value": ""
-    },
-    {
-      "key": "eventCategoryId",
-      "value": ""
-    },
-    {
-      "key": "listingId",
-      "value": ""
-    }
+    { "key": "baseUrl", "value": "http://localhost:3000" },
+    { "key": "adminToken", "value": "" },
+    { "key": "userToken", "value": "" },
+    { "key": "firebaseIdToken", "value": "" },
+    { "key": "serviceCategoryId", "value": "" },
+    { "key": "eventCategoryId", "value": "" },
+    { "key": "subCategoryId", "value": "" },
+    { "key": "listingId", "value": "" },
+    { "key": "eventListingId", "value": "" },
+    { "key": "userId", "value": "" },
+    { "key": "countryId", "value": "" },
+    { "key": "regionId", "value": "" },
+    { "key": "pricingPlanId", "value": "" },
+    { "key": "checkoutSessionId", "value": "" }
   ]
 }

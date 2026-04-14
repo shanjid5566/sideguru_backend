@@ -11,5 +11,6 @@ router.get("/", pricing_controller_1.default.getActivePricingPlans.bind(pricing_
 router.get("/stripe-config", pricing_controller_1.default.getStripeConfig.bind(pricing_controller_1.default));
 router.get("/eligibility", auth_middleware_1.authenticate, pricing_controller_1.default.getPricingEligibility.bind(pricing_controller_1.default));
 router.post("/", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), pricing_controller_1.default.createPricingPlan.bind(pricing_controller_1.default));
+router.patch("/:id", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), pricing_controller_1.default.updatePricingPlan.bind(pricing_controller_1.default));
 router.delete("/:id", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), pricing_controller_1.default.deletePricingPlan.bind(pricing_controller_1.default));
 exports.default = router;

@@ -9,6 +9,7 @@ router.get("/", pricingController.getActivePricingPlans.bind(pricingController))
 router.get("/stripe-config", pricingController.getStripeConfig.bind(pricingController));
 router.get("/eligibility", authenticate, pricingController.getPricingEligibility.bind(pricingController));
 router.post("/", authenticate, authorize("ADMIN"), pricingController.createPricingPlan.bind(pricingController));
+router.patch("/:id", authenticate, authorize("ADMIN"), pricingController.updatePricingPlan.bind(pricingController));
 router.delete("/:id", authenticate, authorize("ADMIN"), pricingController.deletePricingPlan.bind(pricingController));
 
 export default router;

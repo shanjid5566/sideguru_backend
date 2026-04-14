@@ -53,6 +53,15 @@ class PricingController {
             next(error);
         }
     }
+    async updatePricingPlan(req, res, next) {
+        try {
+            const result = await pricing_service_1.default.updatePricingPlan(toSingleParam(req.params.id), req.body);
+            sendResponse(res, result);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
     async deletePricingPlan(req, res, next) {
         try {
             const result = await pricing_service_1.default.deletePricingPlan(toSingleParam(req.params.id));

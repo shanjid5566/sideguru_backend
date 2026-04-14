@@ -157,6 +157,82 @@ class PricingService {
     };
   }
 
+  async updatePricingPlan(id: string, input: PricingPlanInput) {
+    const existingPlan = await prisma.pricingPlan.findUnique({
+      where: { id },
+    });
+
+    if (!existingPlan) {
+      throw createHttpError(404, "Pricing plan not found");
+    }
+
+    const { title, price, duration, isActive } = input;
+    const hasAnyField = title !== undefined || price !== undefined || duration !== undefined || isActive !== undefined;
+
+    if (!hasAnyField) {
+      throw createHttpError(400, "At least one field is required to update pricing plan");
+    }
+
+    const updateData: Record<string, unknown> = {};
+
+    if (title !== undefined) {
+      if (!title || !title.trim()) {
+        throw createHttpError(400, "title must be a non-empty string");
+      }
+
+      updateData.title = title.trim();
+    }
+
+    if (price !== undefined) {
+      const parsedPrice = Number(price);
+
+      if (Number.isNaN(parsedPrice) || parsedPrice < 0) {
+        throw createHttpError(400, "price must be a valid positive number");
+      }
+
+      updateData.price = parsedPrice;
+    }
+
+    if (duration !== undefined) {
+      const parsedDuration = Number(duration);
+
+      if (!Number.isInteger(parsedDuration) || parsedDuration <= 0) {
+        throw createHttpError(400, "duration must be a positive integer in days");
+      }
+
+      updateData.duration = parsedDuration;
+    }
+
+    if (isActive !== undefined) {
+      updateData.isActive = Boolean(isActive);
+    }
+
+    const updatedPlan = await prisma.pricingPlan.update({
+      where: { id },
+      data: updateData,
+    });
+
+    const activePlans = await prisma.pricingPlan.findMany({
+      where: {
+        isActive: true,
+      },
+      orderBy: {
+        price: "asc",
+      },
+    });
+
+    const minimumPrice = activePlans[0]?.price ?? null;
+
+    return {
+      statusCode: 200,
+      message: "Pricing plan updated successfully",
+      data: {
+        ...updatedPlan,
+        isIntroductory: updatedPlan.isActive && updatedPlan.price === minimumPrice,
+      },
+    };
+  }
+
   async deletePricingPlan(id: string) {
     const existingPlan = await prisma.pricingPlan.findUnique({
       where: { id },
