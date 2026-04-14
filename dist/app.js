@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const node_path_1 = __importDefault(require("node:path"));
+const multer_1 = require("./config/multer");
 const upload_routes_1 = __importDefault(require("./routes/upload.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
 const admin_category_routes_1 = __importDefault(require("./routes/admin-category.routes"));
@@ -45,7 +45,7 @@ app.use((_req, res, next) => {
 });
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
-app.use("/uploads", express_1.default.static(node_path_1.default.join(process.cwd(), "uploads")));
+app.use("/uploads", express_1.default.static(multer_1.uploadsStaticDir));
 app.get("/", (_req, res) => {
     res.json({ message: "SideGuru backend is running" });
 });

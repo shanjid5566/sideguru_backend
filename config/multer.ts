@@ -4,9 +4,12 @@ import path from "node:path";
 import multer, { type FileFilterCallback } from "multer";
 import type { Request } from "express";
 
-const uploadsRoot = path.join(process.cwd(), "uploads");
+const isVercel = process.env.VERCEL === "1" || process.env.VERCEL === "true";
+const uploadsRoot = isVercel ? path.join("/tmp", "uploads") : path.join(process.cwd(), "uploads");
 const imageDir = path.join(uploadsRoot, "images");
 const videoDir = path.join(uploadsRoot, "videos");
+
+export const uploadsStaticDir = uploadsRoot;
 
 for (const dir of [uploadsRoot, imageDir, videoDir]) {
   if (!fs.existsSync(dir)) {

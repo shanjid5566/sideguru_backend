@@ -1,5 +1,4 @@
 import type { Request, Response } from "express";
-import path from "node:path";
 
 type MulterRequest = Request & {
   file?: {
@@ -27,8 +26,8 @@ export const uploadMedia = (req: MulterRequest, res: Response): void => {
     return;
   }
 
-  const relativePath = path.relative(process.cwd(), req.file.path).replace(/\\/g, "/");
-  const publicPath = `/${relativePath}`;
+  const mediaFolder = req.file.mimetype.startsWith("video/") ? "videos" : "images";
+  const publicPath = `/uploads/${mediaFolder}/${req.file.filename}`;
 
   res.status(201).json({
     message: "File uploaded successfully",

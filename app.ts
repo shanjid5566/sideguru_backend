@@ -1,5 +1,5 @@
 import express, { type NextFunction, type Request, type Response } from "express";
-import path from "node:path";
+import { uploadsStaticDir } from "./config/multer";
 
 import uploadRouter from "./routes/upload.routes";
 import authRouter from "./routes/auth.routes";
@@ -55,7 +55,7 @@ app.use((_req: Request, res: Response, next: NextFunction) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/uploads", express.static(uploadsStaticDir));
 
 app.get("/", (_req: Request, res: Response) => {
   res.json({ message: "SideGuru backend is running" });

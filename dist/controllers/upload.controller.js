@@ -1,10 +1,6 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploadMedia = void 0;
-const node_path_1 = __importDefault(require("node:path"));
 const buildPublicFileUrl = (req, relativePath) => {
     const backendUrl = process.env.BACKEND_URL;
     if (backendUrl) {
@@ -17,8 +13,8 @@ const uploadMedia = (req, res) => {
         res.status(400).json({ message: "No file uploaded" });
         return;
     }
-    const relativePath = node_path_1.default.relative(process.cwd(), req.file.path).replace(/\\/g, "/");
-    const publicPath = `/${relativePath}`;
+    const mediaFolder = req.file.mimetype.startsWith("video/") ? "videos" : "images";
+    const publicPath = `/uploads/${mediaFolder}/${req.file.filename}`;
     res.status(201).json({
         message: "File uploaded successfully",
         file: {
