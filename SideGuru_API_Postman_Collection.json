@@ -3,7 +3,7 @@
     "_postman_id": "e6a6f6fd-f4c8-4d7f-9d65-8b8106f4cf71",
     "name": "SideGuru API Collection",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "description": "Authentication APIs for SideGuru backend"
+    "description": "Authentication and Admin Category APIs for SideGuru backend"
   },
   "item": [
     {
@@ -21,7 +21,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"admin@sideguru.com\",\n  \"password\": \"Admin@123\"\n}"
+              "raw": "{\n  \"email\": \"admin@sidegurus.com\",\n  \"password\": \"Admin@123\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
@@ -50,7 +50,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"User@12345\"\n}"
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"User@123\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/login",
@@ -78,7 +78,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"User@12345\",\n  \"confirmPassword\": \"User@12345\",\n  \"phoneNumber\": \"+8801710000000\",\n  \"countryName\": \"Bangladesh\",\n  \"regionName\": \"Dhaka\"\n}"
+              "raw": "{\n  \"fullName\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"User@12345\",\n  \"confirmPassword\": \"User@12345\",\n  \"phoneNumber\": \"+1-555-1234\",\n  \"countryName\": \"United States\",\n  \"regionName\": \"California\"\n}"
             },
             "url": {
               "raw": "{{baseUrl}}/api/auth/register",
@@ -151,15 +151,104 @@
           "response": []
         }
       ]
+    },
+    {
+      "name": "Admin Categories",
+      "item": [
+        {
+          "name": "Update/Delete Service Category or Subcategory",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": \"{{serviceCategoryId}}\",\n  \"categoryName\": \"Updated Service Category Name\",\n  \"subcategoryId\": \"{{subCategoryId}}\",\n  \"subcategoryName\": \"Updated Subcategory Name\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/categories/service",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories",
+                "service"
+              ]
+            },
+            "description": "Use categoryName or subcategoryName as null/empty string to delete the target."
+          },
+          "response": []
+        },
+        {
+          "name": "Update/Delete Event Category",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": \"{{eventCategoryId}}\",\n  \"categoryName\": \"Updated Event Category Name\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/categories/event",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "admin",
+                "categories",
+                "event"
+              ]
+            },
+            "description": "Set categoryName to null or empty string to delete the event category."
+          },
+          "response": []
+        }
+      ]
     }
   ],
   "variable": [
     {
       "key": "baseUrl",
-      "value": "http://localhost:5000"
+      "value": "http://localhost:3000"
     },
     {
       "key": "firebaseIdToken",
+      "value": ""
+    },
+    {
+      "key": "adminToken",
+      "value": ""
+    },
+    {
+      "key": "serviceCategoryId",
+      "value": ""
+    },
+    {
+      "key": "subCategoryId",
+      "value": ""
+    },
+    {
+      "key": "eventCategoryId",
       "value": ""
     }
   ]
