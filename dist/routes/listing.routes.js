@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const listing_controller_1 = __importDefault(require("../controllers/listing.controller"));
+const auth_middleware_1 = require("../middlewares/auth.middleware");
+const upload_middleware_1 = require("../middlewares/upload.middleware");
+const router = (0, express_1.Router)();
+router.get("/admin", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), listing_controller_1.default.getAdminServices.bind(listing_controller_1.default));
+router.get("/me", auth_middleware_1.authenticate, listing_controller_1.default.getMyServices.bind(listing_controller_1.default));
+router.get("/", listing_controller_1.default.getPublicServices.bind(listing_controller_1.default));
+router.post("/", auth_middleware_1.authenticate, upload_middleware_1.serviceListingUpload, listing_controller_1.default.createService.bind(listing_controller_1.default));
+router.put("/me/:id", auth_middleware_1.authenticate, upload_middleware_1.serviceListingUpload, listing_controller_1.default.updateService.bind(listing_controller_1.default));
+router.delete("/me/:id", auth_middleware_1.authenticate, listing_controller_1.default.deleteMyService.bind(listing_controller_1.default));
+router.post("/:id/purchase", auth_middleware_1.authenticate, listing_controller_1.default.createServicePaymentIntent.bind(listing_controller_1.default));
+router.post("/:id/purchase/confirm", auth_middleware_1.authenticate, listing_controller_1.default.confirmServiceListingPurchase.bind(listing_controller_1.default));
+router.post("/:id/renew", auth_middleware_1.authenticate, listing_controller_1.default.createServiceRenewalCheckoutSession.bind(listing_controller_1.default));
+router.post("/:id/renew/confirm", auth_middleware_1.authenticate, listing_controller_1.default.confirmServiceRenewal.bind(listing_controller_1.default));
+router.post("/:id/report-spam", listing_controller_1.default.reportServiceSpam.bind(listing_controller_1.default));
+router.patch("/:id/status", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), listing_controller_1.default.updateServiceStatus.bind(listing_controller_1.default));
+router.delete("/:id", auth_middleware_1.authenticate, (0, auth_middleware_1.authorize)("ADMIN"), listing_controller_1.default.deleteService.bind(listing_controller_1.default));
+router.get("/:id", listing_controller_1.default.getServiceById.bind(listing_controller_1.default));
+exports.default = router;

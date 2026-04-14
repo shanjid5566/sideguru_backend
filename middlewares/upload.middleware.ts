@@ -10,3 +10,10 @@ export const eventListingUpload = upload.fields([
 	{ name: "gallery", maxCount: 10 },
 	{ name: "eventGallery", maxCount: 10 },
 ]);
+export const serviceListingUpload = upload.fields([
+	{ name: "mainImage", maxCount: 1 },
+	{ name: "serviceImage", maxCount: 1 },
+	{ name: "serviceImages", maxCount: 10 },
+	{ name: "gallery", maxCount: 10 },
+	{ name: "serviceGallery", maxCount: 10 },
+]);

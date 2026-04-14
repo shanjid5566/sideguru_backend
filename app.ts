@@ -10,6 +10,8 @@ import adminUserRouter from "./routes/admin-user.routes";
 import categoryRouter from "./routes/category.routes";
 import dashboardRouter from "./routes/dashboard.routes";
 import eventRouter from "./routes/event.routes";
+import listingRouter from "./routes/listing.routes";
+import locationRouter from "./routes/location.routes";
 
 const app = express();
 const cors = require("cors") as (options: {
@@ -76,6 +78,8 @@ app.use("/api/admin/revenue", adminRevenueRouter);
 app.use("/api/admin/users", adminUserRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/events", eventRouter);
+app.use("/api/listings", listingRouter);
+app.use("/api/locations", locationRouter);
 app.use((error: Error, _req: Request, res: Response, _next: () => void) => {
   console.error("[API ERROR]", error);
   const message = error.message || "Internal server error";
